@@ -1,7 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
+import * as React from "react";
 import { StyleSheet, Text, View,SafeAreaView } from 'react-native';
-import LoginForm from "./components/LoginForm";
-import * as React from 'react';
+import HomeScreen from "./components/HomeScreen";
+import Checkin from "./components/Checkin";
+import Item from "./components/Item";
+import Attendance from "./components/Attendance";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -13,31 +16,23 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
+          options={{ title: 'Home' }}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Checkin" component={Checkin}
+          options={({navigation,})=>({ 
+            title: '',
+          })}/>
+        <Stack.Screen name="Attendance" component={Attendance}
+          options={({navigation})=>({ 
+            title: 'Attendance',
+          
+          })}/>
       </Stack.Navigator>
     </NavigationContainer>
-    // <View style={styles.container}>
-    //   <StatusBar style="auto" />
-    //   <View>
-    //     <LoginForm style={styles.loginForm}/>
-    //   </View>
-      
-    // </View>
+
     
   );
+  
 }
 
-const styles = StyleSheet.create({
-  loginForm:{
-    flex: 3,
-    margin:"10%",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'lightblue',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
