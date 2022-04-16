@@ -1,9 +1,51 @@
 {
     "univercities":[
         {
-
+            "_id":"",
+            "teachersID":[""],
+            "studentsID":[""],
+            "coursesID":[""],
+            "emailSuffix":"",
+            "geolocation":[{
+                "_id":"",
+                "accuracy":50,
+                "altitude":0,
+                "altitudeAccuracy":0,
+                "heading":0,
+                "latitude":2,
+                "longitude":2,
+                "speed":0
+            }]
         }
-    ]
-
+    ],
+    "courses":[
+        {
+            "_id":"",
+            "name":"Course 1",
+            "studentsInCourses":[""],
+            "lecturesForAWeek":[{
+                "start":"",
+                "end":""
+            }],
+            "geolocationId":""
+        }
+    ],
+    "students":[{
+        "_id":"",
+        "email":"",
+        "password":"",
+        "coursesForStudent":[""],
+        "attendance":[{
+            "idLecture":"",
+            "presence":"Present/Not Present/Pending",
+            "week":"Week 5"
+        }] 
+    }],
+    "teachers":[{
+    "_id":"",
+    "email":"",
+    "password":"",
+    "coursesForTeacher":[""]
+    }]
 
 }
