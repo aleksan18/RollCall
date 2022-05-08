@@ -9,10 +9,10 @@ const Item = (item)=>{
           <Card style={{marginTop:17,marginRight:10,marginBottom:8,backgroundColor:"green"}}>
           <Card.Content>
           <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems: 'center'}}>
-            <Text >{item.start}</Text>
+            <Text >{new Date(item.start).getHours()}:{new Date(item.start).getMinutes()}</Text>
             <Text >{item.name}</Text>
             {item.presence === "Present" ? <Text>Present</Text>:<Text>Not Present</Text>}
-            <Text >{item.end}</Text>
+            <Text >{new Date(item.end).getHours()}:{new Date(item.end).getMinutes()}</Text>
           </View>
           {/* <Avatar.Icon  icon={'icon.png'}/> */}
           </Card.Content>

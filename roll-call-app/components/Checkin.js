@@ -22,12 +22,33 @@ const Checkin = ({navigation,route})=>{
         }
       })
     const authState = useAuthState();
+    React.useLayoutEffect(()=>{
+      navigation.setOptions({
+          headerLeft: ()=>(<View></View>), 
+          headerRight: ()=>(
+              <View>
+              <Button title= "Logout" onPress={()=>{logout(); navigation.navigate("Home",{ })}}/>
+              <Button title="Attendance" onPress={async()=>{
+                const oneMonthEarlier = new Date();
+                oneMonthEarlier.setMonth(oneMonthEarlier.getMonth()-1);
+                await getAttendance(oneMonthEarlier,new Date(),authState.attach(Downgraded).get().user.token)
+                navigation.navigate("Attendance")}}/></View>
+              )
+      })
+    })
     // add with useState a checkIn control
     // after checking in the timer should be removed
     //DONE
     const {location} = route.params;
     console.log(location);
     const {nearestLecture,timer} = getNearestLecture(authState.attach(Downgraded).get().user.todaysLectures)
+    if(typeof nearestLecture === 'undefined') {
+      return(
+        <View style={styles.container}>
+          <Text>No lectures today sorry! :P</Text>
+        </View>
+      )
+    }else{
     const [timerCount, setTimer] = useState(timer);
     const [checkInControl,setCheckInControl] = useState(false);
     const [radius,setRadius] = useState({});
@@ -36,27 +57,11 @@ const Checkin = ({navigation,route})=>{
         countdown(setTimer,checkInControl);
         setRadius(calcRadius(location.coords,uniLocation))
     }, []);
-      React.useLayoutEffect(()=>{
-        navigation.setOptions({
-            headerLeft: ()=>(<View></View>), 
-            headerRight: ()=>(
-                <View>
-                <Button title= "Logout" onPress={()=>{logout(); navigation.navigate("Home",{ })}}/>
-                <Button title="Attendance" onPress={async()=>{
-                  const oneMonthEarlier = new Date();
-                  oneMonthEarlier.setMonth(oneMonthEarlier.getMonth()-1);
-                  await getAttendance(oneMonthEarlier,new Date(),authState.attach(Downgraded).get().user.token)
-                  navigation.navigate("Attendance")}}/></View>
-                )
-
-        })
-        
-      })
-
+     
     return (
         <View style={styles.container} >
-            {radius< uniLocation.radius ? 
-            (timerCount >1800 ?
+            {radius < uniLocation.radius ? 
+            (timerCount <1800 ?
             (timerCount>0 ? 
             (!checkInControl ?
             <View>
@@ -74,6 +79,7 @@ const Checkin = ({navigation,route})=>{
             :(<Text>Not near enough to check in</Text>)}
         </View>
     )
+  }
 }
 
 export default Checkin;

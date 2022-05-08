@@ -31,7 +31,6 @@ export const retryLocation = async(setLocation)=>{
  * @param {LocationObjectControls} geoUniversity The location object of the university received from the backend
  */
 export const calcRadius = (geoStudent,geoUniversity)=>{
-  console.log(geoUniversity)
         // degrees to radians.
         const lon1 =  geoStudent.longitude * Math.PI / 180;
         const lon2 = geoUniversity.longitude * Math.PI / 180;

@@ -9,7 +9,7 @@ export const getNearestLecture = (lectures) => {
     lectures.map((lecture) => {
         console.log(lecture.startDateAndTime);
         timer=(new Date(lecture.startDateAndTime).getTime() - new Date().getTime())/1000;
-        if( timer >0 || timer < 1800*10){
+        if( timer >0 || timer < 1800){
             nearestLecture= lecture
         }
     });
