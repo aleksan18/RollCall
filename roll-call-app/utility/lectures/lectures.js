@@ -8,8 +8,8 @@ export const getNearestLecture = (lectures) => {
     let timer;
     lectures.map((lecture) => {
         console.log(lecture.startDateAndTime);
-        timer= (new Date(lecture.startDateAndTime).getTime() - new Date().getTime())/1000;
-        if( timer >0 || timer < 1800){
+        timer=(new Date(lecture.startDateAndTime).getTime() - new Date().getTime())/1000;
+        if( timer >0 || timer < 1800*10){
             nearestLecture= lecture
         }
     });

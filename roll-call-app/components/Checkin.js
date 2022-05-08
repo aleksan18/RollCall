@@ -4,7 +4,8 @@ import {StyleSheet,View,Button,Text} from "react-native";
 import {calcRadius} from "../utility/geolocation/getpermission";
 import { countdown } from '../utility/clocktimer/clocktimer';
 import {getNearestLecture} from '../utility/lectures/lectures';
-import {logout,useAuthState} from "../store/AuthState";
+import {logout,sendAttendance,useAuthState} from "../store/AuthState";
+import {getAttendance} from "../store/AttendanceState";
 import { Downgraded } from '@hookstate/core';
 const Checkin = ({navigation,route})=>{
     const styles = StyleSheet.create({
@@ -41,7 +42,11 @@ const Checkin = ({navigation,route})=>{
             headerRight: ()=>(
                 <View>
                 <Button title= "Logout" onPress={()=>{logout(); navigation.navigate("Home",{ })}}/>
-                <Button title="Attendance" onPress={()=>{ navigation.navigate("Attendance")}}/></View>
+                <Button title="Attendance" onPress={async()=>{
+                  const oneMonthEarlier = new Date();
+                  oneMonthEarlier.setMonth(oneMonthEarlier.getMonth()-1);
+                  await getAttendance(oneMonthEarlier,new Date(),authState.attach(Downgraded).get().user.token)
+                  navigation.navigate("Attendance")}}/></View>
                 )
 
         })
@@ -58,7 +63,10 @@ const Checkin = ({navigation,route})=>{
             <Text>{Math.floor(timerCount/60/60)} : {Math.floor(timerCount/60%60)*1} : {Math.round(timerCount%60)}</Text>
             <Button style={styles.checkin} title="Check In" onPress={()=>{
             //check In call gere which should then return and refresh the user object
-            setCheckInControl(true)}}/>
+            setCheckInControl(true);
+            sendAttendance(nearestLecture.lectureForSemesterId,nearestLecture.courseId,nearestLecture.courseName,nearestLecture.startDateAndTime,nearestLecture.endDateAndTime,"Present",authState.attach(Downgraded).get().user.token)
+          }  
+            }/>
             </View>
             :<Text>Checked in</Text>)
             :<Text>Check in time has closed</Text>)

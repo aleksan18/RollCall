@@ -3,7 +3,7 @@ import React from "react-native";
 import { View } from "react-native";
 import {Button,Text,StyleSheet,Alert} from "react-native";
 import { HelperText, TextInput } from 'react-native-paper';
-import {login,useAuthState} from "../store/AuthState";
+import {login,register,useAuthState} from "../store/AuthState";
 
 const RegisterScreen = ({navigation,route,})=>{
     const styles = StyleSheet.create({
@@ -83,7 +83,18 @@ const RegisterScreen = ({navigation,route,})=>{
             
         </HelperText>
         <Button title="Register" onPress={async()=>{
-            navigation.navigate("Home")
+            if(register(form.email, form.password)){
+                navigation.navigate("Home")
+            }else{
+                Alert.alert("Internal Server Error,","An error has occurred. Please try again",[{
+                text:"Okay",
+                onPress:()=>{console.log("okay was pressed")
+                close()
+                },
+                style:"default"
+                }])
+            }
+            
         }} />
         <Button title="Cancel" onPress={()=>{ setForm({email:"",password:"",confirmPassword:""})}} />
         </View>
