@@ -5,6 +5,7 @@ import HomeScreen from "./components/HomeScreen";
 import Checkin from "./components/Checkin";
 import Item from "./components/Item";
 import Attendance from "./components/Attendance";
+import RegisterScreen from "./components/RegisterScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -27,6 +28,9 @@ export default function App() {
             title: 'Attendance',
           
           })}/>
+        <Stack.Screen name="Register" component={RegisterScreen}
+        options={({navigation})=>({ title:'Register'})}
+        />
       </Stack.Navigator>
     </NavigationContainer>
 

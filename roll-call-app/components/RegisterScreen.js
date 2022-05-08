@@ -1,17 +1,26 @@
-import {HookState}from "@hookstate/core";
 import { useState } from "react";
 import React from "react-native";
 import { View } from "react-native";
 import {Button,Text,StyleSheet,Alert} from "react-native";
 import { HelperText, TextInput } from 'react-native-paper';
 import {login,useAuthState} from "../store/AuthState";
-const LoginForm = ({navigation,route,location})=>{
+
+const RegisterScreen = ({navigation,route,})=>{
     const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: 'lightblue',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
         loginForm:{
             flex: 3,
+            
             margin:"10%",
           },
         inputfields:{
+            maxWidth:"50vw",
+            maxHeight:"10vh",
             borderWidth: 1,
             flex:2,
             marginBottom:"5%",
@@ -22,21 +31,27 @@ const LoginForm = ({navigation,route,location})=>{
     console.log(authState);
     const [form,setForm]=useState({
         email:"",
-        password:""
+        password:"",
+        confirmPassword:""
     });
     console.log(form);
     const hasErrors = () => {
+        if(form.password !== form.confirmPassword){
+            return false;
+        }
         return !form.email.includes('@') && form.email.length !== 0 ; 
     };
     return (
         <View style={styles.container}>
+        <Text> Register</Text>
+        <View style={styles.loginForm}>
         <TextInput
         label="Email"
         placeholder="Enter your email address"
         textContentType="emailAddress"
         style={styles.inputfields}
         accessibilityLabel="Email"
-        onChangeText={text =>setForm({email:text,password:form.password})}
+        onChangeText={text =>setForm({email:text,password:form.password,confirmPassword:form.confirmPassword})}
         value={form.email}
         />
         <HelperText type="error"  visible={hasErrors()}>
@@ -51,27 +66,29 @@ const LoginForm = ({navigation,route,location})=>{
         secureTextEntry
         style={styles.inputfields}
         accessibilityLabel="Password"
-        onChangeText={text =>setForm({email:form.email,password:text})}
+        onChangeText={text =>setForm({email:form.email,password:text,confirmPassword:form.confirmPassword})}
         value={form.password}
+        />
+        <TextInput
+        label="Confirm password"
+        placeholder="Enter your password again"
+        textContentType="password"
+        secureTextEntry
+        style={styles.inputfields}
+        accessibilityLabel="Password"
+        onChangeText={text =>setForm({email:form.email,password:form.password,confirmPassword:text})}
+        value={form.confirmPassword}
         />
         <HelperText type="error">
             
         </HelperText>
-        <Button title="Login" onPress={async()=>{
-            await login(form.email,form.password)
-
-            if(authState.get().isLoggedIn){navigation.navigate('Checkin',{location:location})}
-        else{
-            Alert.alert('Something went wrong. Please try again',`Bad coder bro! What you gonna do!`,[{
-                text:"Okay",
-                onPress:()=>{console.log("okay was pressed")},
-                style:"default"
-            }])
-        }
+        <Button title="Register" onPress={async()=>{
+            navigation.navigate("Home")
         }} />
-        <Button title="Cancel" onPress={()=>{ setForm({email:"",password:""})}} />
+        <Button title="Cancel" onPress={()=>{ setForm({email:"",password:"",confirmPassword:""})}} />
+        </View>
         </View>
     );
 }
 
-export default LoginForm;
+export default RegisterScreen

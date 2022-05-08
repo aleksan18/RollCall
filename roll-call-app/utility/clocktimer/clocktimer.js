@@ -1,6 +1,11 @@
 
-
-export const timer =(setTimer,checkInControl)=>{
+/**
+ * A countdown until check in is closed.
+ * @param {useState} setTimer  A useState react function
+ * @param {boolean} checkInControl A value for checking the state
+ * @returns Using setInterval countsdown the timer
+ */
+export const countdown =(setTimer,checkInControl)=>{
 
     let interval = setInterval(() => {
         //add the time until it locks it out

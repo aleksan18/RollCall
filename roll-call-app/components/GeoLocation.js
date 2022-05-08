@@ -1,20 +1,9 @@
-import {useState,useEffect} from "react";
 import { View,Text } from "react-native";
-import {setUp} from "../utility/geolocation/getpermission";
 
 
 const GeoLocation = () =>{
 
-    const [location, setLocation] = useState({
-        coords:{},
-        timestamp:null
-    });
-    const [errorMsg, setErrorMsg] = useState("");
-    console.log(location);
-    console.log(errorMsg);
-    useEffect(() => {
-        setUp(setLocation,setErrorMsg);
-    }, []);
+    
     return(
         //  Move setUp to Sign in
         // here to add-->

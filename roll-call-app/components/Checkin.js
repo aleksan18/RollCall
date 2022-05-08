@@ -1,8 +1,12 @@
 import * as React from 'react';
 import {useState,useEffect} from "react";
 import {StyleSheet,View,Button,Text} from "react-native";
-import { timer } from '../utility/clocktimer/clocktimer';
-const Checkin = ({navigation})=>{
+import {calcRadius} from "../utility/geolocation/getpermission";
+import { countdown } from '../utility/clocktimer/clocktimer';
+import {getNearestLecture} from '../utility/lectures/lectures';
+import {logout,useAuthState} from "../store/AuthState";
+import { Downgraded } from '@hookstate/core';
+const Checkin = ({navigation,route})=>{
     const styles = StyleSheet.create({
         
         container: {
@@ -16,25 +20,27 @@ const Checkin = ({navigation})=>{
             height:'100%',
         }
       })
+    const authState = useAuthState();
     // add with useState a checkIn control
     // after checking in the timer should be removed
     //DONE
-    const startTime = new Date(
-        'April 16, 2022 12:00:40'
-    ).getTime();
-    const currentTime = new Date().getTime()
-    const [timerCount, setTimer] = useState((startTime- currentTime)/1000)
+    const {location} = route.params;
+    console.log(location);
+    const {nearestLecture,timer} = getNearestLecture(authState.attach(Downgraded).get().user.todaysLectures)
+    const [timerCount, setTimer] = useState(timer);
     const [checkInControl,setCheckInControl] = useState(false);
- 
+    const [radius,setRadius] = useState({});
+    const [uniLocation,setUniLocation] = useState(nearestLecture.geolocation[0]);    
     useEffect(() => {
-        timer(setTimer,checkInControl)
+        countdown(setTimer,checkInControl);
+        setRadius(calcRadius(location.coords,uniLocation))
     }, []);
       React.useLayoutEffect(()=>{
         navigation.setOptions({
             headerLeft: ()=>(<View></View>), 
             headerRight: ()=>(
                 <View>
-                <Button title= "Logout" onPress={()=>{ navigation.navigate("Home",{ })}}/>
+                <Button title= "Logout" onPress={()=>{logout(); navigation.navigate("Home",{ })}}/>
                 <Button title="Attendance" onPress={()=>{ navigation.navigate("Attendance")}}/></View>
                 )
 
@@ -44,14 +50,20 @@ const Checkin = ({navigation})=>{
 
     return (
         <View style={styles.container} >
-            
-            {timerCount>0  ? (!checkInControl ?
+            {radius< uniLocation.radius ? 
+            (timerCount >1800 ?
+            (timerCount>0 ? 
+            (!checkInControl ?
             <View>
             <Text>{Math.floor(timerCount/60/60)} : {Math.floor(timerCount/60%60)*1} : {Math.round(timerCount%60)}</Text>
-            <Button style={styles.checkin} title="Check In" onPress={()=>{setCheckInControl(true)}}/>
+            <Button style={styles.checkin} title="Check In" onPress={()=>{
+            //check In call gere which should then return and refresh the user object
+            setCheckInControl(true)}}/>
             </View>
             :<Text>Checked in</Text>)
-            :<Text>Check in time has closed</Text>}
+            :<Text>Check in time has closed</Text>)
+            :(<Text>Check in time too far away</Text>))
+            :(<Text>Not near enough to check in</Text>)}
         </View>
     )
 }

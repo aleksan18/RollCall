@@ -12,10 +12,10 @@ const Attendance = ({navigation})=>{
         <SafeAreaView style={styles.container}>
           <Agenda 
             items={{
-              '2022-04-16': [
+              '2022-05-16': [
               {name: 'class 1',start:"13:22",end:"16:55",type:true},
               {name: 'class 2',start:"12:22",end:"13:00",type:false}],
-              '2022-04-17':[{name:"class 3",start:"13:11",end:"16:00",type:true}]
+              '2022-05-17':[{name:"class 3",start:"13:11",end:"16:00",type:true}]
             }}
             loadItemsForMonth={month => {
             }}
