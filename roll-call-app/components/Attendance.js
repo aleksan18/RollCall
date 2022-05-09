@@ -13,18 +13,24 @@ const Attendance = ({navigation})=>{
         container: {
           flex: 1,
         },
-      });
-      const dateArray = attendance.map((item)=>item.startDateAndTime)
-      const itemsForDisplay = Object.assign(...attendance.map(item =>{
-        return {[item.startDateAndTime]:{
-        name:item.courseName,start:item.startDateAndTime,end:item.endDateAndTime,presence:item.presence
-      }}
-    }))
-      console.log(itemsForDisplay);
+      }); 
+      //
+      const dateArray = Object.assign(...attendance.map((item)=>{
+        return {[item.startDateAndTime.split("T")[0]]:[]}
+      }))
+      const itemsForDisplay = attendance.map(item =>{
+        const date =  item.startDateAndTime.split("T")[0]
+        if(Object.keys(dateArray).includes(date)){
+          dateArray[date].push({
+            name:item.courseName,start:item.startDateAndTime,end:item.endDateAndTime,presence:item.presence
+          })
+        }
+    })
+      console.log(dateArray)
     return(
         <SafeAreaView style={styles.container}>
           <Agenda 
-            items={itemsForDisplay}
+            items={dateArray}
             loadItemsForMonth={month => {
             }}
             renderItem={Item}
