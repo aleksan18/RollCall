@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { StyleSheet,View,Text,Button } from "react-native"
+import { StyleSheet,View,Text,Button, FlatList, Dimensions } from "react-native"
+import {Card, Chip} from "react-native-paper";
 import {useState,useEffect} from "react";
+import Calendar from './Calendar';
 const CourseScreen= ({navigation})=>{
     const styles = StyleSheet.create({
         container: {
@@ -26,9 +28,12 @@ const CourseScreen= ({navigation})=>{
       })
     useEffect(() => {
     }, []);
+
     return (
         <View style={styles.container}>
-            <Text> Courses</Text>
+            <Text> Courses: </Text>
+            <Chip></Chip>
+            <Calendar></Calendar>
         </View>
     )
     
