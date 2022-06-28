@@ -19,7 +19,7 @@ const LoginForm = ({navigation,route})=>{
         }
     })
     const authState = useAuthState();
-    console.log(authState);
+    console.log("Inside LoginForm > authState: ", authState);
     const [form,setForm]=useState({
         email:"",
         password:""
@@ -58,9 +58,9 @@ const LoginForm = ({navigation,route})=>{
             
         </HelperText>
         <Button title="Login" onPress={async()=>{
-            //await login(form.email,form.password);
+            await login(form.email,form.password);
             navigation.navigate('Main',{});
-            if(authState.get().isLoggedIn){navigation.navigate('Checkin',{location:location})}
+            if(authState.get().isLoggedIn){navigation.navigate('Main',{location:location})}
         else{
             Alert.alert('Something went wrong. Please try again',`Bad coder bro! What you gonna do!`,[{
                 text:"Okay",
