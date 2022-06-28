@@ -6,6 +6,11 @@ import {logout,useAuthState} from "../store/AuthState";
 import { Downgraded } from '@hookstate/core';
 
 import Calendar from './Calendar';
+import {login,useAuthState} from "../store/AuthState"
+import {updateStudentAttendance,useIndividualStudentAttendanceState} from "../store/IndividualStudentAttendanceState";
+import {getAttendanceForLectureApi} from "../services/attendance.service";
+import { Downgraded } from '@hookstate/core';
+
 const CourseScreen= ({navigation})=>{
   const authState = useAuthState();
   const courses = authState.attach(Downgraded).get().user.teacherCourses;
@@ -18,7 +23,11 @@ const CourseScreen= ({navigation})=>{
           justifyContent: 'center',
         },
       });
-   
+      const authState = useAuthState();
+      const individualStudentAttendanceState = useIndividualStudentAttendanceState();
+      console.log("Inside CourseScreen > authState: ", authState);
+      console.log("Inside CourseScreen > authState.get().user: ", authState.get().user);
+      console.log("Inside CourseScreen > authState.attach(Downgraded).get().user.token: ", authState.attach(Downgraded).get().user.token);
     const [errorMsg, setErrorMsg] = useState("");
     React.useLayoutEffect(()=>{
         navigation.setOptions({
@@ -56,6 +65,11 @@ const CourseScreen= ({navigation})=>{
               )
             })}
             <Calendar choosenCourse={choosenCourse}></Calendar>
+            <Button title= "Click" onPress={ async ()=>{
+              const attendanceForLecture = await getAttendanceForLectureApi("62666c8732509c342d776af0", "62666ce532509c342d776af1", authState.attach(Downgraded).get().user.token)
+              individualStudentAttendanceState.set({attendanceForLecture, studentUpdated: false,})
+              console.log("Inside CourseScreen > attendanceForLecture: ", attendanceForLecture);
+              navigation.navigate("Student Attendance",{ attendanceForLecture })}}/>
         </View>
     )
     

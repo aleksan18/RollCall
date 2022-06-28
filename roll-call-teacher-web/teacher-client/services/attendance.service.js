@@ -19,3 +19,23 @@ export const getAttendanceApi = (startDate, finalDate,token)=>{
         throw error.response.data;
     });
 }
+
+export const getAttendanceForLectureApi = (course_id, lecture_id, token) => {
+    return axios.post("http://192.168.0.102:5000/attendance/getAttendanceForLecture",
+        { course_id, lecture_id, token })
+        .then((response) => response.data)
+        .catch((error) => {
+            console.log(error);
+            throw error.response.data;
+        });
+}
+
+export const updateStudentAttendanceApi = (email, attendance) => {
+    return axios.post("http://192.168.0.102:5000/db/updateStudentAttendance",
+        { email, attendance })
+        .then((response) => response.data)
+        .catch((error) => {
+            console.log(error);
+            throw error.response.data;
+        });
+}

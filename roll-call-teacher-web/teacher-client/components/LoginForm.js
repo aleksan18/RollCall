@@ -19,7 +19,7 @@ const LoginForm = ({navigation,route})=>{
         }
     })
     const authState = useAuthState();
-    console.log(authState);
+    console.log("Inside LoginForm > authState: ", authState);
     const [form,setForm]=useState({
         email:"",
         password:""
