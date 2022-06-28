@@ -25,8 +25,9 @@ export default class DaysInMonth extends React.PureComponent{
             })
         }
     }
-
+  
     render(){
+
         return(
             <>
                 {
@@ -34,10 +35,10 @@ export default class DaysInMonth extends React.PureComponent{
                         <CalendarRow 
                             key = {'calendar row ' + index}
                             rowData = {rowData}
-
+                            lectures={this.props.lectures}
                             lastCalendarDayIndex = {this.state.lastCalendarDayIndex}
                             changeCurrentCalendarDayIndex = {this.changeCurrentCalendarDayIndex}
-
+                            setLectures={this.props.setLectures}
                             month_index = {this.props.month_index}
                             current_month_index = {this.props.current_month_index}
                             chooseDifferentMonth = {this.props.chooseDifferentMonth}

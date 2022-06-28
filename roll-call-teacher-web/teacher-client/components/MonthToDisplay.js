@@ -19,7 +19,9 @@ export default class MonthToDisplay extends React.Component{
     day_data_array // Hold the data to display of each day in the current calendar month
 
     state = {
-        row_days_array: []
+        row_days_array: [],
+        choosenCourse:{},
+        filteredLectures:[{}]
     }
 
     getDaysInMonth = (month, year) => {
@@ -51,13 +53,39 @@ export default class MonthToDisplay extends React.Component{
             })
         }
     }
+    componentDidUpdate(prevProps) {
+        
+        if(this.props.choosenCourse !== prevProps.choosenCourse){
+          this.filterLectures(this.props.lectures,this.props.month_data.month)
+          this.setState({
+            choosenCourse:this.props.choosenCourse
+          })
+        }
+        
+      }
+      filterLectures(lectures,month){
+        if(lectures){
+            const filteredLectures =lectures.filter((item)=>{
+                let lectureMonth = new Date(item.startDateAndTime).getMonth();
+                if(lectureMonth === month){
+                    return true;
+                }else{
+                    return false;
+                }
+            })
+          
+            this.setState({
+                filteredLectures:filteredLectures
+            })
+        }else{
 
+        }
+      }
     componentDidMount(){
         this.day_data_array = [] //will have length of 42, since we will display the month calendar in a table of 6 rows * 7 columns = 42 cells
-
         let month = this.props.month_data.month,
             year = this.props.month_data.year
-
+        
         let daysThisMonth = this.getDaysInMonth(month, year) //Number of days in this month
         
 
@@ -166,8 +194,9 @@ export default class MonthToDisplay extends React.Component{
                         </View>
                         
                         <DaysInMonth
+                            setLectures={this.props.setLectures}
                             row_days_array = {this.state.row_days_array}
-
+                            lectures={this.state.filteredLectures}
                             month_index = {this.props.month_index}
                             current_month_index = {this.props.current_month_index}
                             chooseDifferentMonth = {this.props.chooseDifferentMonth}

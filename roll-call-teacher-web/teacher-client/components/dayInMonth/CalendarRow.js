@@ -8,7 +8,6 @@ import DayHolder from './DayHolder'
 import DummyHolder from './DummyHolder'
 
 export default class CalendarRow extends React.PureComponent{
-
     render(){
         return(
             //Rendering each row
@@ -17,14 +16,18 @@ export default class CalendarRow extends React.PureComponent{
                     flexDirection: "row"
                 }}
             >
-                {this.props.rowData.map((data, index) => {
+                {
+                this.props.rowData.map((data, index) => {
+                    
+                  
                     if(data.dayData.main){
+                        
                         return(
                             <DayHolder
                                 key={"day holder " + data.calendarDayIndex}
-
+                                lectures={this.props.lectures}
                                 day = {data.dayData.day}
-
+                                setLectures={this.props.setLectures}
                                 calendarDayIndex = {data.calendarDayIndex}
                                 lastCalendarDayIndex = {this.props.lastCalendarDayIndex}
                                 changeCurrentCalendarDayIndex = {this.props.changeCurrentCalendarDayIndex}

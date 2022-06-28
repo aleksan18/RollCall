@@ -1,6 +1,6 @@
 import axios from "axios";
 export const loginApi = (email,password) =>{
-    return  axios.post('http://10.130.183.27:5000/auth/login',{email,password},)
+    return  axios.post('http://localhost:5000/auth/loginTeacher',{email,password},)
     .then((response) => response.data)
     .catch((error) => {
       console.log(error);

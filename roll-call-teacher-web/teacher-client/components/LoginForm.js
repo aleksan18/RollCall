@@ -58,9 +58,9 @@ const LoginForm = ({navigation,route})=>{
             
         </HelperText>
         <Button title="Login" onPress={async()=>{
-            //await login(form.email,form.password);
-            navigation.navigate('Main',{});
-            if(authState.get().isLoggedIn){navigation.navigate('Checkin',{location:location})}
+            await login(form.email,form.password);
+           
+            if(authState.get().isLoggedIn){navigation.navigate('Main',{});}
         else{
             Alert.alert('Something went wrong. Please try again',`Bad coder bro! What you gonna do!`,[{
                 text:"Okay",
