@@ -1,8 +1,9 @@
 import axios from "axios";
 //http://localhost:5000
 //http://192.168.0.101:5000
+//10.130.183.27:19000
 export const checkInApi = (attendance,token) =>{
-    return axios.post("http://192.168.0.101:5000/attendance/addAttendance",{attendance,token},)
+    return axios.post("http://localhost:5000/attendance/addAttendance",{attendance,token},)
     .then((response) =>response.data)
     .catch((error) => {
         console.log(error);
@@ -10,7 +11,7 @@ export const checkInApi = (attendance,token) =>{
     });
 }
 export const getAttendanceApi = (startDate, finalDate,token)=>{
-    return axios.post("http://192.168.0.101:5000/attendance/getAttendance",
+    return axios.post("http://localhost:5000/attendance/getAttendance",
     {startDate,finalDate,token})
     .then((response) =>response.data)
     .catch((error) => {

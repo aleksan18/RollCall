@@ -138,7 +138,7 @@ import {
                 color:"black",
                 backgroundColor:"black",
             }}/>
-            <Lecture lectures={this.state.lecturesToDisplay} name={this.state.lecturesToDisplay.name}></Lecture>
+            <Lecture navigation={this.props.navigation} choosenCourse={this.state.choosenCourse} lectures={this.state.lecturesToDisplay} name={this.state.lecturesToDisplay.name}></Lecture>
           </View>
         );
     }

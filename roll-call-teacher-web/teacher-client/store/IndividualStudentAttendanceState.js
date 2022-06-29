@@ -12,10 +12,7 @@ const initialState = {
 const individualStudentAttendanceState = createState(initialState);
 
 export const updateStudentAttendance = async (email, attendance) => {
-    console.log("updateStudentAttendance > email: ", email)
-    console.log("updateStudentAttendance > attendance: ", attendance)
     const studentUpdated = await updateStudentAttendanceApi(email, attendance);
-console.log("individualStudentAttendanceState > studentUpdated: ", studentUpdated)
 }
 /**
  * 
