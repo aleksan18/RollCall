@@ -25,6 +25,7 @@ export default class MonthToDisplay extends React.Component{
     }
 
     getDaysInMonth = (month, year) => {
+        console.log(new Date(year, (month + 1 ), 0).getDate());
         return new Date(year, (month + 1 ), 0).getDate()    //Month should be incremented by 1 because the 'month' parameter is the month index (1-12 changed to 0-11)
                                                             //to get total days of the wanted month.
     }
@@ -54,14 +55,16 @@ export default class MonthToDisplay extends React.Component{
         }
     }
     componentDidUpdate(prevProps) {
-        
+        console.log(prevProps);
         if(this.props.choosenCourse !== prevProps.choosenCourse){
           this.filterLectures(this.props.lectures,this.props.month_data.month)
           this.setState({
             choosenCourse:this.props.choosenCourse
           })
         }
-        
+        if(this.props.month_data !== prevProps.month_data){
+            this.updateDayInMont()
+        }
       }
       filterLectures(lectures,month){
         if(lectures){
@@ -81,7 +84,7 @@ export default class MonthToDisplay extends React.Component{
 
         }
       }
-    componentDidMount(){
+    updateDayInMont=()=>{
         this.day_data_array = [] //will have length of 42, since we will display the month calendar in a table of 6 rows * 7 columns = 42 cells
         let month = this.props.month_data.month,
             year = this.props.month_data.year
@@ -140,6 +143,9 @@ export default class MonthToDisplay extends React.Component{
         this.setState({
             row_days_array: [... this.row_days_array]
         })
+    }
+    componentDidMount(){
+        this.updateDayInMont()
     }
 
     render(){

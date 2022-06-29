@@ -70,8 +70,6 @@ export default class DayHolder extends React.PureComponent{
         let daySetForLecture;
         let lecturesDayHolder;
         this.props.lectures.map((item)=>{
-            console.log(item);
-            console.log(this.props.day);
            if(new Date(item.startDateAndTime).getDate() === this.props.day ){
                daySetForLecture = this.props.day
                lecturesDayHolder =item;
